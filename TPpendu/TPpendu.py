@@ -25,6 +25,7 @@ if __name__ == "__main__":
     while isNewGame == 1:
 
         nbTries = nbMaxTries  #reset
+        isWordFound = 0
 
         #choix random d'un mot dans la liste et initialisation
         nbMax = len(listWords)
@@ -90,7 +91,6 @@ if __name__ == "__main__":
                 else:   #cas d'entrée de lettre valide : application de l'essai
                     
                     isValidTry = 1
-                    isWordFound = 0
                     nbTries -= 1
 
                     #cas d'une tentative de mot
