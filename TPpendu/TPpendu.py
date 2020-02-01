@@ -11,14 +11,12 @@ if __name__ == "__main__":
     fileWords.close()
 
     #const
-    nbMaxTries = 100
+    nbMaxTries = 12
 
     #en-tête d'accueil
-    print("Welcome to the hanged one game ;)")
-    print("")
+    print("Welcome to the hanged one game ;)\n")
     print("The computer choose a word.")
-    print("You have 8 chances to find it by trying letters one by one.")
-    print("")
+    print("You have 8 chances to find it by trying letters one by one.\n")
 
 
     isNewGame = 1     #bouclage sur les parties
@@ -36,11 +34,7 @@ if __name__ == "__main__":
         for j, let in enumerate(wordChoosed):
             wordState.append((j, let, 0))
 
-        #test
-        #print(wordState)
-
-        print("Fine! Good luck :)")
-        print("")
+        print("Fine! Good luck :)\n")
 
 
         while nbTries > 0:   #bouclage sur les tentatives
@@ -51,8 +45,7 @@ if __name__ == "__main__":
                 triesLine = "Tries left : " + str(nbTries) + " /"
                 for l in listLettersTried:
                     triesLine += " " + l
-                print(triesLine)
-                print("")
+                print(triesLine + "\n")
 
                 wordLine = "The word :"
                 i = 0
@@ -64,8 +57,7 @@ if __name__ == "__main__":
                         wordLine += " _"
 
                     i += 1
-                print(wordLine)
-                print("")
+                print(wordLine + "\n")
 
                 letterTried = input("Your try ('0' to quit) : ")
                 inputLength = len(letterTried)
@@ -73,20 +65,13 @@ if __name__ == "__main__":
                 if inputLength == 0:
                     isValidTry = 0
 
-                #elif inputLength > 1:
-                #    isValidTry = 0
-                #    print("Invalid try. Only one by one.")
-                #    print("")
-
                 elif letterTried == "0":
                     isValidTry = 1
                     nbTries = 0
                 
                 elif not re.search("[a-zA-Z]", letterTried):
                     isValidTry = 0
-                    print("Invalid try. Only letters are expected.")
-                    print("")
-
+                    print("Invalid try. Only letters are expected.\n")
 
                 else:   #cas d'entrée de lettre valide : application de l'essai
                     
@@ -99,8 +84,7 @@ if __name__ == "__main__":
                             
                             isWordFound = 1                            
                         else:                            
-                            print("What a shame! This is not exact...")
-                            print("")
+                            print("What a shame! This is not exact...\n")
 
                         nbTries -= 1
 
@@ -116,12 +100,11 @@ if __name__ == "__main__":
                                     wordState.pop(k)
                                     wordState.insert(k, (k, let[1], 1))
 
-                            print("Good move!")
+                            print("Good move!\n")
                         else:
                             if not letterTried in listLettersTried:
                                 listLettersTried.append(letterTried)
-                            print("Bad move ! It isn't in the word...")
-                        print("")
+                            print("Bad move ! It isn't in the word...\n")
 
 
                 #vérification de l'état trouvé ou non du mot
@@ -135,19 +118,19 @@ if __name__ == "__main__":
 
                 #Résultat
                 if isWordFound == 1:
+                    
                     print("Good Game! You found the word with " + str(nbMaxTries-nbTries) + " tries !")
                     endLine = "The word was :"
+                    
                     for l in wordChoosed:
-                        endLine += " " + l
-                    print(endLine)
-
-                    print("")
+                        endLine += " " + l                    
+                        
+                    print(endLine + "\n")
                     nbTries = 0
                         
         
         if nbTries == 0 and isWordFound == 0:
-            print("Looser!")
-            print("")
+            print("Looser!\n")
             
         #proposition de nouvelle partie
         isValidAnswer = 0
@@ -164,11 +147,3 @@ if __name__ == "__main__":
                 isNewGame = 0
             else:
                 isValidAnswer = 0
-
-
-    #test
-    for w in listWords:
-        pass
-
-    
-    #input("")   #end
