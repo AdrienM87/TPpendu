@@ -1,4 +1,5 @@
 import re   #regex
+import random
 
 # main test
 if __name__ == "__main__":
@@ -19,6 +20,11 @@ if __name__ == "__main__":
     continueChoice = 1
     while continueChoice == 1:   #bouclage sur les participations au jeu
 
+        #choix random d'un mot dans la liste
+        nbMax = len(listWords)
+        wordChoosed = listWords[random.randint(0, nbMax)]
+
+        nbLives = 8
         print("Fine! Good luck :)")
         print("")
 
@@ -44,7 +50,11 @@ if __name__ == "__main__":
                 if not validTry:
                     print("Invalid try. Only letters are expected.")
                 else:
-                    print("Good!")  #test       
+                    #cas d'entrée de lettre valide : application de l'essai
+                    if letterTried in wordChoosed:
+                        print("Well done!")
+                    else:
+                        print("What a shame!")
 
 
     #test
