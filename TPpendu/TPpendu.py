@@ -10,6 +10,9 @@ if __name__ == "__main__":
     listWords = strWords.split()
     fileWords.close()
 
+    #const
+    nbMaxTries = 100
+
     #en-tête d'accueil
     print("Welcome to the hanged one game ;)")
     print("")
@@ -21,7 +24,7 @@ if __name__ == "__main__":
     isNewGame = 1     #bouclage sur les parties
     while isNewGame == 1:
 
-        nbTries = 8  #reset
+        nbTries = nbMaxTries  #reset
 
         #choix random d'un mot dans la liste et initialisation
         nbMax = len(listWords)
@@ -39,8 +42,7 @@ if __name__ == "__main__":
         print("")
 
 
-        isContinued = 1
-        while isContinued == 1 and nbTries > 0:   #bouclage sur les tentatives
+        while nbTries > 0:   #bouclage sur les tentatives
 
             isValidTry = 0
             while isValidTry != 1:    #bouclage sur la validité de la saisie
@@ -70,14 +72,14 @@ if __name__ == "__main__":
                 if inputLength == 0:
                     isValidTry = 0
 
-                elif inputLength > 1:
-                    isValidTry = 0
-                    print("Invalid try. Only one by one.")
-                    print("")
+                #elif inputLength > 1:
+                #    isValidTry = 0
+                #    print("Invalid try. Only one by one.")
+                #    print("")
 
                 elif letterTried == "0":
                     isValidTry = 1
-                    isContinued = 0
+                    nbTries = 0
                 
                 elif not re.search("[a-zA-Z]", letterTried):
                     isValidTry = 0
@@ -86,28 +88,64 @@ if __name__ == "__main__":
 
 
                 else:   #cas d'entrée de lettre valide : application de l'essai
+                    
                     isValidTry = 1
+                    isWordFound = 0
                     nbTries -= 1
 
-                    if letterTried in wordChoosed:
-
-                        for k, let in enumerate(wordState):
+                    #cas d'une tentative de mot
+                    if len(letterTried) > 1:
+                        if letterTried == wordChoosed:
                             
-                            if let[1] == letterTried:
+                            isWordFound = 1                            
+                        else:                            
+                            print("What a shame! This is not exact...")
+                            print("")
 
-                                tempLet = let
-                                wordState.pop(k)
-                                wordState.insert(k, (k, let[1], 1))
+                        nbTries -= 1
 
-                        print("Well done!")
+                    #cas d'une tentative de lettre seule
                     else:
-                        if not letterTried in listLettersTried:
-                            listLettersTried.append(letterTried)
-                        print("What a shame!")
+                        if letterTried in wordChoosed:
+
+                            for k, let in enumerate(wordState):
+                            
+                                if let[1] == letterTried:
+
+                                    tempLet = let
+                                    wordState.pop(k)
+                                    wordState.insert(k, (k, let[1], 1))
+
+                            print("Good move!")
+                        else:
+                            if not letterTried in listLettersTried:
+                                listLettersTried.append(letterTried)
+                            print("Bad move ! It isn't in the word...")
+                        print("")
+
+
+                #vérification de l'état trouvé ou non du mot
+                if isWordFound == 0:
+
+                    isWordFound = 1
+                    for let in wordState:
+                        if let[2] == 0:
+                            isWordFound = 0
+                            break
+
+                #Résultat
+                if isWordFound == 1:
+                    print("Good Game! You found the word with " + str(nbMaxTries-nbTries) + " tries !")
+                    endLine = "The word was :"
+                    for l in wordChoosed:
+                        endLine += " " + l
+                    print(endLine)
+
                     print("")
+                    nbTries = 0
                         
         
-        if nbTries == 0:
+        if nbTries == 0 and isWordFound == 0:
             print("Looser!")
             print("")
             
