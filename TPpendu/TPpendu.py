@@ -21,21 +21,41 @@ if __name__ == "__main__":
     isNewGame = 1     #bouclage sur les parties
     while isNewGame == 1:
 
-        nbLives = 8  #reset
+        nbTries = 8  #reset
 
-        #choix random d'un mot dans la liste
+        #choix random d'un mot dans la liste et initialisation
         nbMax = len(listWords)
         wordChoosed = listWords[random.randint(0, nbMax)]
+        wordState = list()
+
+        for j, let in enumerate(wordChoosed):
+            wordState.append((j, let, 0))
+
+        #test
+        #print(wordState)
 
         print("Fine! Good luck :)")
         print("")
 
 
         isContinued = 1
-        while isContinued == 1 and nbLives > 0:   #bouclage sur les tentatives
+        while isContinued == 1 and nbTries > 0:   #bouclage sur les tentatives
 
             isValidTry = 0
             while isValidTry != 1:    #bouclage sur la validité de la saisie
+
+                wordLine = "The word :"
+                i = 0
+                while i < len(wordState):
+
+                    if wordState[i][2] == 1:
+                        wordLine += " " + wordState[i][1]
+                    else:
+                        wordLine += " _"
+
+                    i += 1
+                print(wordLine)
+                print("")
 
                 letterTried = input("Your try ('0' to quit) : ")
                 inputLength = len(letterTried)
@@ -46,6 +66,7 @@ if __name__ == "__main__":
                 elif inputLength > 1:
                     isValidTry = 0
                     print("Invalid try. Only one by one.")
+                    print("")
 
                 elif letterTried == "0":
                     isValidTry = 1
@@ -54,18 +75,29 @@ if __name__ == "__main__":
                 elif not re.search("[a-zA-Z]", letterTried):
                     isValidTry = 0
                     print("Invalid try. Only letters are expected.")
+                    print("")
 
 
                 else:   #cas d'entrée de lettre valide : application de l'essai
                     isValidTry = 1
+                    nbTries -= 1
 
                     if letterTried in wordChoosed:
+
+                        for k, let in enumerate(wordState):
+                            
+                            if let[1] == letterTried:
+
+                                tempLet = let
+                                wordState.pop(k)
+                                wordState.insert(k, (k, let[1], 1))
+
                         print("Well done!")
                     else:
                         print("What a shame!")
-                        nbLives -= 1
+                        
         
-        if nbLives == 0:
+        if nbTries == 0:
             print("Looser!")
             print("")
             
