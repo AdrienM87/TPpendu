@@ -22,17 +22,24 @@ if __name__ == "__main__":
         print("Fine! Good luck :)")
         print("")
 
-        validTry = none
-        while validTry == none:    #bouclage sur la validité de la saisie
+        validTry = False
+        while validTry != True:    #bouclage sur la validité de la saisie
 
             letterTried = input("Your try : ")
-            validTry = re.search("[a-zA-Z]", letterTried)
+            inputLength = len(letterTried)
 
-            if not validTry:
-                print("Invalid try. Only letters are expected.")
+            if inputLength == 0:
+                validTry = False
+            elif inputLength > 1:
+                validTry = False
+                print("Invalid try. Only one by one.")
             else:
-                print("Good!")  #test
-        
+                validTry = re.search("[a-zA-Z]", letterTried)
+
+                if not validTry:
+                    print("Invalid try. Only letters are expected.")
+                else:
+                    print("Good!")  #test       
 
 
     #test
