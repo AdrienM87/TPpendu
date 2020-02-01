@@ -26,6 +26,7 @@ if __name__ == "__main__":
         #choix random d'un mot dans la liste et initialisation
         nbMax = len(listWords)
         wordChoosed = listWords[random.randint(0, nbMax)]
+        listLettersTried = list()
         wordState = list()
 
         for j, let in enumerate(wordChoosed):
@@ -43,6 +44,12 @@ if __name__ == "__main__":
 
             isValidTry = 0
             while isValidTry != 1:    #bouclage sur la validité de la saisie
+
+                triesLine = "Tries left : " + str(nbTries) + " /"
+                for l in listLettersTried:
+                    triesLine += " " + l
+                print(triesLine)
+                print("")
 
                 wordLine = "The word :"
                 i = 0
@@ -94,7 +101,10 @@ if __name__ == "__main__":
 
                         print("Well done!")
                     else:
+                        if not letterTried in listLettersTried:
+                            listLettersTried.append(letterTried)
                         print("What a shame!")
+                    print("")
                         
         
         if nbTries == 0:
